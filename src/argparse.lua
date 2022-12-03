@@ -231,7 +231,7 @@ local add_help = {"add_help", function(self, value)
          :description "Show this help message and exit."
          :action(function()
             print(self:get_help())
-            os.exit(0)
+            error()
          end)
 
       if value ~= true then
@@ -1086,13 +1086,13 @@ function Parser:add_help_command(value)
       :action(function(_, _, cmd)
          if not cmd then
             print(self:get_help())
-            os.exit(0)
+            error()
          else
             for _, command in ipairs(self._commands) do
                for _, alias in ipairs(command._aliases) do
                   if alias == cmd then
                      print(command:get_help())
-                     os.exit(0)
+                     error()
                   end
                end
             end
@@ -1167,7 +1167,7 @@ function Parser:add_complete(value)
       :choices {"bash", "zsh", "fish"}
       :action(function(_, _, shell)
          io.write(self["get_" .. shell .. "_complete"](self))
-         os.exit(0)
+         error()
       end)
 
    if value then
@@ -1194,7 +1194,7 @@ function Parser:add_complete_command(value)
       :choices {"bash", "zsh", "fish"}
       :action(function(_, _, shell)
          io.write(self["get_" .. shell .. "_complete"](self))
-         os.exit(0)
+         error()
       end)
 
    if value then
@@ -2052,7 +2052,7 @@ end
 
 function Parser:error(msg)
    io.stderr:write(("%s\n\nError: %s\n"):format(self:get_usage(), msg))
-   os.exit(1)
+   error()
 end
 
 -- Compatibility with strict.lua and other checkers:
@@ -2091,7 +2091,7 @@ end
 
 local argparse = {}
 
-argparse.version = "0.7.1"
+argparse.version = "0.7.2"
 
 setmetatable(argparse, {__call = function(_, ...)
    return Parser(default_cmdline[0]):add_help(true)(...)
