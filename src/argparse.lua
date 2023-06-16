@@ -928,9 +928,9 @@ function Parser:_get_element_help(element)
    -- If too long, start description after all the label lines.
    -- Otherwise, combine label and description lines.
 
-   local usage_margin_len = self:_inherit_property("help_usage_margin", 3)
+   local usage_margin_len = self:_inherit_property("help_usage_margin", 1)
    local usage_margin = (" "):rep(usage_margin_len)
-   local description_margin_len = self:_inherit_property("help_description_margin", 25)
+   local description_margin_len = self:_inherit_property("help_description_margin", 23)
    local description_margin = (" "):rep(description_margin_len)
 
    local help_max_width = self:_inherit_property("help_max_width")
@@ -2091,7 +2091,7 @@ end
 
 local argparse = {}
 
-argparse.version = "0.7.2"
+argparse.version = "0.7.3"
 
 setmetatable(argparse, {__call = function(_, ...)
    return Parser(default_cmdline[0]):add_help(true)(...)
